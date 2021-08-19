@@ -1,0 +1,106 @@
+local DiscordLib = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/discord%20lib.txt")()
+
+local win = DiscordLib:Window("Venom Hub l FREE SCRIPT")
+local serv = win:Server("- Build A Boat -", "")
+local tgls = serv:Channel("Main Menu")
+tgls:Seperator()
+tgls:Label("                                -   Made By Slaying    -                                ")
+tgls:Seperator()
+tgls:Toggle("Auto-Farm",false, function(vu)
+   autoFarm = vu
+while autoFarm == true do
+    local TS = game:GetService("TweenService")
+    local location2 = CFrame.new(-61, 70.739624, 125) --288
+    local location3 = CFrame.new(-55.7065125, -360.739624, 9492.35645, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+    local location = CFrame.new(-55.7065125, 70.739624, 9492.35645, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+    local plr = game.Players.LocalPlayer.Character.HumanoidRootPart
+    local tween1 = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(3), {CFrame = location2 })
+    tween1:Play()
+    wait(3)
+    local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(20), {CFrame = location })
+    tween:Play()
+    wait(20)
+    local tween2 = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(3), {CFrame = location3 })
+    tween2:Play()
+    wait(8)
+    workspace.ClaimRiverResultsGold:FireServer()
+    wait(10)
+end
+   end)
+   tgls:Toggle("Noclip",true, function(value)
+      NoClip = value
+   end)
+   spawn(function()
+      while wait(.1) do
+         if NoClip then
+            game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState(11)
+         end
+      end
+   end)
+
+   tgls:Toggle("Ctrl + Click = TP",false, function(vu)
+      CTRL = vu
+   end)
+   local Plr = game:GetService("Players").LocalPlayer
+   local Mouse = Plr:GetMouse()
+   Mouse.Button1Down:connect(
+      function()
+         if not game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.LeftControl) then
+            return
+         end
+         if not Mouse.Target then
+            return
+         end
+         if CTRL then
+            Plr.Character:MoveTo(Mouse.Hit.p)
+         end
+      end)
+   
+
+   tgls:Button("FPS BOOST", function()
+      local decalsyeeted = true -- Leaving this on makes games look shitty but the fps goes up by at least 20.
+      local g = game
+      local w = g.Workspace
+      local l = g.Lighting
+      local t = w.Terrain
+      t.WaterWaveSize = 0
+      t.WaterWaveSpeed = 0
+      t.WaterReflectance = 0
+      t.WaterTransparency = 0
+      l.GlobalShadows = false
+      l.FogEnd = 9e9
+      l.Brightness = 0
+      settings().Rendering.QualityLevel = "Level01"
+      for i, v in pairs(g:GetDescendants()) do
+          if v:IsA("Part") or v:IsA("Union") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+              v.Material = "Plastic"
+              v.Reflectance = 0
+          elseif v:IsA("Decal") or v:IsA("Texture") and decalsyeeted then
+              v.Transparency = 1
+          elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+              v.Lifetime = NumberRange.new(0)
+          elseif v:IsA("Explosion") then
+              v.BlastPressure = 1
+              v.BlastRadius = 1
+          elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles") then
+              v.Enabled = false
+          elseif v:IsA("MeshPart") then
+              v.Material = "Plastic"
+              v.Reflectance = 0
+              v.TextureID = 10385902758728957
+          end
+      end
+      for i, e in pairs(l:GetChildren()) do
+          if e:IsA("BlurEffect") or e:IsA("SunRaysEffect") or e:IsA("ColorCorrectionEffect") or e:IsA("BloomEffect") or e:IsA("DepthOfFieldEffect") then
+              e.Enabled = false
+          end
+      end
+  end)
+
+  local tgls = tgls:Slider("WalkSpeed", 16, 500, 16, function(v)
+   game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+   end)
+
+  local tgls = tgls:Slider("JumpPower", 50, 500, 50, function(v)
+     game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+   end)
